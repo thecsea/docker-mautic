@@ -64,8 +64,22 @@ COPY makedb.php /makedb.php
 COPY mautic.crontab /etc/cron.d/mautic
 RUN chmod 644 /etc/cron.d/mautic
 
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.pem -subj "/C=AT/ST=Vienna/L=Vienna/O=Security/OU=Development/CN=example.com"
+
+
 # Enable Apache Rewrite Module
 RUN a2enmod rewrite
+
+RUN a2ensite default-ssl
+## TODO FIX ME defualt SSL
+RUN a2enmod ssl
+
+## TODO queue service?
+
+EXPOSE 80
+EXPOSE 443
+
+
 
 # Apply necessary permissions
 RUN ["chmod", "+x", "/entrypoint.sh"]
