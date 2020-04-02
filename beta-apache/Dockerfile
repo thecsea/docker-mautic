@@ -32,7 +32,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 VOLUME /var/www/html
 
 # Define Mautic version and expected SHA1 signature
-ENV MAUTIC_VERSION 2.15.3
+ENV MAUTIC_VERSION "3.0.0-beta"
 ENV MAUTIC_SHA1 d6ec21376ceacd8bbb8d9ee58e81d8050a79c0b8
 
 # By default enable cron jobs
@@ -50,7 +50,7 @@ ENV PHP_INI_DATE_TIMEZONE='UTC' \
 
 # Download package and extract to web volume
 RUN curl -o mautic.zip -SL https://github.com/mautic/mautic/releases/download/${MAUTIC_VERSION}/${MAUTIC_VERSION}.zip \
-	&& echo "$MAUTIC_SHA1 *mautic.zip" | sha1sum -c - \
+	#&& echo "$MAUTIC_SHA1 *mautic.zip" | sha1sum -c - \
 	&& mkdir /usr/src/mautic \
 	&& unzip mautic.zip -d /usr/src/mautic \
 	&& rm mautic.zip \
